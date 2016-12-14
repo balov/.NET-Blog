@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Blog.Models;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace Blog.Controllers
 {
@@ -153,10 +155,19 @@ namespace Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Validate Google recaptcha 
+                var response = Request["g-recaptcha-response"];
+                string secretKey = "6Lfduw4UAAAAAEby0ZlFVkPLf7DqfWQ8ErGCIqjk";
+                var grClient = new WebClient();
+                var resultGr = grClient.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+                var obj = JObject.Parse(resultGr);
+                var status = (bool)obj.SelectToken("success");
+                
+
                 var user = new ApplicationUser { UserName = model.Email, FullName = model.FullName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
+                if (result.Succeeded && status == true)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

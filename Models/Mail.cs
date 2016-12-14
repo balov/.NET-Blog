@@ -9,6 +9,7 @@ namespace Blog.Models
     public class Mail
     {
        
+        public string userMessage { get; set; }
 
         [Required]
         [StringLength(50)]
