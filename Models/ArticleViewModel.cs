@@ -10,7 +10,11 @@ namespace Blog.Models
     {
         public string Tags { get; set; }
 
+        public string Comment { get; set; }
+
         public int Id { get; set; }
+
+        public string AuthorName { get; set; }
 
         [Required]
         [StringLength(50)]

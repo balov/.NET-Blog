@@ -18,13 +18,48 @@
             --author @Model.Author.FullName
         </small>
         <footer class="pull-right">
+            @if (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.Name))
+            {
             @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
             @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+            }
+            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })   
         </footer>
     </article>
-</div>
-<hr />
 
+    <div class="row">
+    </div>
+
+    <article>
+
+        <h5>
+            <strong>Comments:</strong>
+        </h5>
+
+        <hr />
+
+        @foreach (var comment in Model.Comments)
+        {
+            <p>
+                @comment.Content
+            </p>
+
+            <small class="author">
+                -- @comment.Author
+                @comment.dateCreated
+            </small>
+
+            <hr /> 
+        }
+        <footer class="pull-left">
+            @if (Request.IsAuthenticated)
+            {
+            @Html.ActionLink("Comment", "Comment", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+            }
+        </footer>
+</article>
+
+
+</div>
 
 

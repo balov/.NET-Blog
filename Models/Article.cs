@@ -11,15 +11,24 @@ namespace Blog.Models
     {
         private ICollection<Tag> tags;
 
+        private ICollection<Comment> comments;
+
         public virtual ICollection<Tag> Tags
         {
             get { return this.tags; }
             set { this.tags = value; }
         }
 
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
+        }
+
         public Article()
         {
             this.tags = new HashSet<Tag>();
+            this.comments = new HashSet<Comment>();
         }
 
         public Article(string authorId, string title, string content, int categoryId)
