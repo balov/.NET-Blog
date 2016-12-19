@@ -31,14 +31,17 @@ namespace Blog.Models
             this.comments = new HashSet<Comment>();
         }
 
-        public Article(string authorId, string title, string content, int categoryId)
+        public Article(string authorId, string title, string content, int categoryId, int visits)
         {
             this.AuthorId = authorId;
             this.Title = title;
             this.Content = content;
             this.CategoryId = categoryId;
             this.tags = new HashSet<Tag>();
+            this.Visits = visits;
         }
+
+        public int Visits { get; set; }
 
         [Key]
         public int Id { get; set; }

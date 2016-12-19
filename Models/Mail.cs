@@ -8,8 +8,8 @@ namespace Blog.Models
 {
     public class Mail
     {
-       
-        public string userMessage { get; set; }
+
+        //public HttpPostedFileBase Attachment { get; set; }
 
         [Required]
         [StringLength(50)]

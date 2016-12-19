@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Blog.Models;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Blog.Controllers
 {
@@ -22,7 +23,7 @@ namespace Blog.Controllers
         //SEND: Contact form
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Send(Mail c)
+        public ActionResult Contact(Mail c)
         {
             //Validate Google recaptcha 
             //Source http://www.dotnetawesome.com/2015/12/google-new-recaptcha-using-aspnet-mvc.html 
@@ -54,20 +55,37 @@ namespace Blog.Controllers
                 message.Body = body;
                 message.IsBodyHtml = false;
 
+               // if (c.Attachment != null && c.Attachment.ContentLength > 0)
+               // {
+               //     message.Attachments.Add(new Attachment(c.Attachment.InputStream, Path.GetFileName(c.Attachment.FileName)));
+               // }
+
+
                 if (ModelState.IsValid && status == true)
                 {
                     try
                     {
                         client.Send(message);
-                        c.userMessage = "Your message has been sent!";
+                        ModelState.AddModelError("", "Your message has been sent!");
                     }
                     catch(Exception)
                     {
-                        c.userMessage = "A problem occured. Please try again later!";
+                        ModelState.AddModelError("", "A problem occured. Please try again later!");
+                    }
+                }
+                else
+                {
+                    if (status == false)
+                    {
+                        ModelState.AddModelError("", "Google reCaptcha validation failed!");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "A problem occured. Please try again later!");
                     }
                 }
 
-                return RedirectToAction("Contact", "Mail");
+                return View();
                
             }
 

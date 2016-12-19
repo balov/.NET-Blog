@@ -8,12 +8,12 @@
 
         <h2>@ViewBag.Title</h2>
         
-        @using (Html.BeginForm("Send", "Mail", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Contact", "Mail", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
             <h4>Please use the following form to send me an email</h4>
             <hr />
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.ValidationSummary()
 
             <div class="form-group">
 
@@ -47,25 +47,15 @@
             </div>
 
             <div class="g-recaptcha col-sm-offset-4" data-sitekey="6Lfduw4UAAAAABcpnokLsgciAFpPF9x21Bs_VmIM"></div>
-  
+
             <hr />
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-4">
                     <input type="submit" class="btn btn-default" value="Send" />
+                    @Html.ActionLink("Cancel", "ListCategories", "Home", null, new { @class = "btn btn-default" })
                 </div>
             </div>
-
-            if (IsPost)
-
-            {
-
-                ViewBag.Message = Model.userMessage;
-
-                <h4>@ViewBag.Message</h4>
-
-            }
-
 
 
         }

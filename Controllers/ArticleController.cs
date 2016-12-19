@@ -49,6 +49,11 @@ namespace Blog.Controllers
                     .Include(a => a.Comments)
                     .First();
 
+                //Count articles visits
+                article.Visits = article.Visits + 1;
+                database.Entry(article).State = EntityState.Modified;
+                database.SaveChanges();
+
                 if (article == null)
                 {
                     return HttpNotFound();
@@ -88,7 +93,7 @@ namespace Blog.Controllers
                         .First()
                         .Id;
 
-                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId);
+                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId, 0);
 
                     this.SetArticleTags(article, model, database);
 
@@ -156,12 +161,19 @@ namespace Blog.Controllers
                 var article = database.Articles
                     .Where(a => a.Id == id)
                     .Include(a => a.Author)
+                    .Include(a => a.Comments)
                     .First();
 
                 // Check if article exists
                 if (article == null)
                 {
                     return HttpNotFound();
+                }
+
+                var articleComments = article.Comments.ToList();
+                foreach (var comment in articleComments)
+                {
+                    database.Comments.Remove(comment);
                 }
 
                 // Delete article from database
@@ -269,11 +281,6 @@ namespace Blog.Controllers
                     .Where(a => a.Id == id)
                     .First();
 
-                if (!IsUserAuthorizedToEdit(article))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-                }
-
                 // Check if article exists
                 if (article == null)
                 {
@@ -289,10 +296,9 @@ namespace Blog.Controllers
                 model.AuthorName = article.Author.FullName;
                 model.CategoryId = article.CategoryId;
                 model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
-
                 model.Tags = string.Join(", ", article.Tags.Select(t => t.Name));
 
-                // Show the editing view
+                // Show the comment view
                 return View(model);
             }
         }
@@ -320,6 +326,14 @@ namespace Blog.Controllers
                     comment.dateCreated = DateTime.Now;
                     comment.Author = authorName;
 
+                //Check if the form is filled
+                if (comment.Content == null)
+                {
+                    return RedirectToAction("Comment", new { id = article.Id });
+                }
+                //If yes save to the database
+                else
+                {
                     database.Comments.Add(comment);
 
                     article.Comments.Add(comment);
@@ -327,9 +341,9 @@ namespace Blog.Controllers
                     database.SaveChanges();
 
                     return RedirectToAction("Details", "Article", new { id = article.Id });
+                }
       
-               }
-                     
+               }          
         }
 
         private bool IsUserAuthorizedToEdit(Article article)

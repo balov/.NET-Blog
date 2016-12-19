@@ -223,10 +223,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Blog-20161201085053.mdf" />
-    <Content Include="App_Data\aspnet-Blog-20161201085053_log.ldf">
-      <DependentUpon>aspnet-Blog-20161201085053.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -299,6 +295,7 @@
     <Content Include="Views\Tag\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>

@@ -29,9 +29,15 @@
                         </div>
 
                         <small class="author">
-                            --author @article.Author.FullName
+                            --author @article.Author.FullName 
                         </small>
-                    </footer>
+                        <small class="author">
+                            @article.Visits visits
+                        </small>
+                        <small class="author">
+                            @article.Comments.Count() comments
+                        </small>
+                     </footer>
                 </article>
             </div>
         }

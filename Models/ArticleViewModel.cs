@@ -23,7 +23,7 @@ namespace Blog.Models
         [Required]
         public string Content { get; set; }
         public string AuthorId { get; set; }
-
+       
         public int CategoryId { get; set; }
         public ICollection<Article> Articles { get; set; }
         public List<Category> Categories { get; internal set; }
