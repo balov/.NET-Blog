@@ -49,6 +49,66 @@ namespace Blog.Controllers
             }
         }
 
-  
+        public ActionResult ListMpArticles()
+        {
+            Dictionary<Article, int> temporary = new Dictionary<Article, int>();
+    
+            using (var database = new BlogDbContext())
+            {
+                    
+                var articles = database.Articles
+                    .Include(a => a.Author)
+                    .Include(a => a.Tags)
+                    .Include(a => a.Comments)
+                    .ToList();
+                foreach(var art in articles)
+                {
+                    temporary.Add(art, art.Visits);
+                }
+
+                temporary = temporary.OrderByDescending(p => p.Value).ToDictionary(p => p.Key, p => p.Value);
+
+                articles.RemoveRange(0, articles.Count());
+
+                foreach(KeyValuePair<Article, int> pair in temporary)
+                {
+                    articles.Add(pair.Key);
+                }
+
+                return View(articles);
+            }
+        }
+
+        public ActionResult ListMcArticles()
+        {
+            Dictionary<Article, int> temporary = new Dictionary<Article, int>();
+
+            using (var database = new BlogDbContext())
+            {
+
+                var articles = database.Articles
+                    .Include(a => a.Author)
+                    .Include(a => a.Tags)
+                    .Include(a => a.Comments)
+                    .ToList();
+                foreach (var art in articles)
+                {
+                    temporary.Add(art, art.Comments.Count());
+                }
+
+                temporary = temporary.OrderByDescending(p => p.Value).ToDictionary(p => p.Key, p => p.Value);
+
+                articles.RemoveRange(0, articles.Count());
+
+                foreach (KeyValuePair<Article, int> pair in temporary)
+                {
+                    articles.Add(pair.Key);
+                }
+
+                return View("ListMpArticles", articles);
+            }
+        }
+
+
     }
 }

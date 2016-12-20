@@ -34,5 +34,52 @@ namespace Blog.Controllers
             }
             
         }
+
+        //
+        //GET: TagSearch
+        public ActionResult TagSearch()
+        {
+            return View();
+        }
+
+        //
+        //POST: TagSearch
+        [HttpPost]
+        public ActionResult TagSearch(TagSearch model)
+        {
+            if (ModelState.IsValid)
+            {
+                var database = new BlogDbContext();
+
+                var tags = database.Tags.ToList();
+
+                bool found = false;
+
+                int tagID = -1;
+
+                foreach(var tag in tags)
+                {
+                    if (tag.Name == model.keyWordSearch.ToLower())
+                    {
+                        found = true;
+                        tagID = tag.Id;
+                    }
+                }
+
+                if (found == true && tagID >= 0)
+                {
+                    return RedirectToAction("List", new { id = tagID });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nothing found!");
+                    return View(model);
+                }
+            }
+
+            return View(model);
+
+        }
+
     }
 }

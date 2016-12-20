@@ -219,6 +219,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TagSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -293,6 +294,8 @@
     <Content Include="Views\Home\ListCategories.cshtml" />
     <Content Include="Views\Article\Comment.cshtml" />
     <Content Include="Views\Tag\List.cshtml" />
+    <Content Include="Views\Home\ListMpArticles.cshtml" />
+    <Content Include="Views\Tag\TagSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
