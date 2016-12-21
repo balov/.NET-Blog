@@ -57,7 +57,7 @@ namespace Blog.Controllers
 
                 int tagID = -1;
 
-                foreach(var tag in tags)
+                foreach (var tag in tags)
                 {
                     if (tag.Name == model.keyWordSearch.ToLower())
                     {
@@ -80,6 +80,5 @@ namespace Blog.Controllers
             return View(model);
 
         }
-
     }
 }

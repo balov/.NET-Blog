@@ -199,6 +199,7 @@
     <Compile Include="Controllers\Admin\CategoryController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -292,14 +293,14 @@
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Home\ListArticles.cshtml" />
     <Content Include="Views\Home\ListCategories.cshtml" />
-    <Content Include="Views\Article\Comment.cshtml" />
+    <Content Include="Views\Comment\Comment.cshtml" />
     <Content Include="Views\Tag\List.cshtml" />
-    <Content Include="Views\Home\ListMpArticles.cshtml" />
     <Content Include="Views\Tag\TagSearch.cshtml" />
+    <Content Include="Views\Home\ListMpArticles.cshtml" />
+    <Content Include="Views\Comment\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

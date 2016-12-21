@@ -49,12 +49,23 @@
                 @comment.dateCreated
             </small>
 
+            if (User.IsInRole("Admin"))
+            {
+                <div class="row">
+                </div>
+
+            <footer class="pull-left">
+                 @Html.ActionLink("Delete", "Delete", "Comment", new { @id = comment.Id }, new { @class = "btn btn-danger btn-xs" })     
+            </footer>
+                
+            }
+
             <hr /> 
         }
         <footer class="pull-left">
             @if (Request.IsAuthenticated)
             {
-            @Html.ActionLink("Comment", "Comment", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+            @Html.ActionLink("Comment", "Comment", "Comment", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
             }
         </footer>
 </article>

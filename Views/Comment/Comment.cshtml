@@ -1,0 +1,48 @@
+﻿@model Blog.Models.ArticleViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <p>
+            @Model.Content
+        </p>
+        <small class="author">
+            --author @Model.AuthorName
+        </small>
+   
+    </article>
+
+    <hr />
+
+    <h2>Comment:</h2>
+    @using (Html.BeginForm("Comment", "Comment", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Comment, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @rows = "7" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                    @Html.ActionLink("Cancel", "Details", "Article", new { @id = Model.Id }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+    }
+</div>
+<hr />
+

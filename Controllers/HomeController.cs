@@ -52,16 +52,16 @@ namespace Blog.Controllers
         public ActionResult ListMpArticles()
         {
             Dictionary<Article, int> temporary = new Dictionary<Article, int>();
-    
+
             using (var database = new BlogDbContext())
             {
-                    
+
                 var articles = database.Articles
                     .Include(a => a.Author)
                     .Include(a => a.Tags)
                     .Include(a => a.Comments)
                     .ToList();
-                foreach(var art in articles)
+                foreach (var art in articles)
                 {
                     temporary.Add(art, art.Visits);
                 }
@@ -70,7 +70,7 @@ namespace Blog.Controllers
 
                 articles.RemoveRange(0, articles.Count());
 
-                foreach(KeyValuePair<Article, int> pair in temporary)
+                foreach (KeyValuePair<Article, int> pair in temporary)
                 {
                     articles.Add(pair.Key);
                 }
@@ -108,7 +108,6 @@ namespace Blog.Controllers
                 return View("ListMpArticles", articles);
             }
         }
-
 
     }
 }

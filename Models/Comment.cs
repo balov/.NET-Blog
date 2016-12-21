@@ -18,6 +18,7 @@ namespace Blog.Models
 
         public string Author { get; set; }
 
+        [Display(Name = "Date")]
         public DateTime dateCreated { get; set; }
 
         [Key]
